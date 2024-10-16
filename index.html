@@ -27,11 +27,20 @@
                 blendMode: 'ADD'
             });
 
-            const logo = this.physics.add.image(400, 100, 'logo');
+            const logo = this.add.image(400, 100, 'logo');
 
-            logo.setVelocity(100, 200);
-            logo.setBounce(1, 1);
-            logo.setCollideWorldBounds(true);
+            logo.setInteractive({draggable: true});
+
+            this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
+                dragX = Phaser.Math.Snap.To(dragX, 50);
+                dragY = Phaser.Math.Snap.To(dragY, 50);
+
+                gameObject.setPosition(dragX, dragY);
+            })
+
+            // logo.setVelocity(100, 200);
+            // logo.setBounce(1, 1);
+            // logo.setCollideWorldBounds(true);
 
             particles.startFollow(logo);
         }
@@ -41,14 +50,16 @@
         type: Phaser.AUTO,
         width: 800,
         height: 600,
-        scene: Example,
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: { y: 200 }
-            }
-        }
+        scene: Example
     };
+
+    // ,
+    //     physics: {
+    //         default: 'arcade',
+    //         arcade: {
+    //             gravity: { y: 200 }
+    //         }
+    //     }
 
     const game = new Phaser.Game(config);
     </script>
